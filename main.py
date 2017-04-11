@@ -6,14 +6,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 import pandas as pd
+import numpy as np
 
 import config
 from younet_rnd_infrastructure.tri import utils
 
 
-def get_url_profile_by_age(age, size=2):
-    # fp = webdriver.FirefoxProfile()
-    # fp.set_preference("network.cookie.cookieBehavior", 2)
+def get_url_profile_by_age(age, size=1000):
+    time.sleep(np.random.randint(0, 1500)/1000.0)
 
     driver = webdriver.Firefox()
     driver.get("https://facebook.com/")
@@ -62,7 +62,7 @@ def get_url_profile_by_ages(ages):
     return url_profile_by_ages
 
 if __name__ == '__main__':
-    ages = range(20, 38)
+    ages = range(20, 29)
     url_profile_by_ages = get_url_profile_by_ages(ages)
     for i in range(len(ages)):
         print 'Size df age %s: %s' % (ages[i], url_profile_by_ages[i].shape[0])
