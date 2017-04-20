@@ -9,7 +9,8 @@ import pandas as pd
 import numpy as np
 
 import config
-from younet_rnd_infrastructure.tri import utils
+from younet_rnd_infrastructure.tri.common import utils
+from younet_rnd_infrastructure.tri.common import file_tool
 
 
 def get_url_profile_by_age(age, size=1000):
@@ -41,6 +42,9 @@ def get_url_profile_by_age(age, size=1000):
             print 'Send page down %s/%s' % (i, size)
             time.sleep(2)
             element.send_keys(Keys.PAGE_DOWN)
+            if len(driver.find_elements_by_xpath("//*[contains(text(), 'End of results')]")) != 0:
+                print 'There are no more result.'
+                break
 
         with open('./temp/age_%s.html' % age, 'w') as input:
             input.write(driver.page_source)
@@ -58,12 +62,35 @@ def get_url_profile_by_age(age, size=1000):
 
 
 def get_url_profile_by_ages(ages):
-    url_profile_by_ages = utils.run_paralell(get_url_profile_by_age, ages, n_jobs=9)
+    url_profile_by_ages = utils.run_paralell(get_url_profile_by_age, ages, n_jobs=1)
     return url_profile_by_ages
 
+
+def count_result(ages):
+    total = 0
+    for age in ages:
+        df = pd.read_csv('./output/profiles_by_age_%s.csv' % age)
+        total += df.shape[0]
+    return total
+
+
+def aggregate_result(ages):
+    list_csv_file = map(lambda x: './output/profiles_by_age_%s.csv' % x, ages)
+    result_df = pd.DataFrame(columns=['url', 'age'])
+    for i in range(len(list_csv_file)):
+        df = pd.read_csv(list_csv_file[i])
+        df['url'] = df.iloc[:, 0]
+        df['age'] = int(ages[i])
+
+        result_df = result_df.append(df, ignore_index=True)
+    result_df[['age','url']].to_csv('./output/profile_by_ages.csv', index=None)
+
+
 if __name__ == '__main__':
-    ages = range(20, 29)
-    url_profile_by_ages = get_url_profile_by_ages(ages)
-    for i in range(len(ages)):
-        print 'Size df age %s: %s' % (ages[i], url_profile_by_ages[i].shape[0])
-        url_profile_by_ages[i].to_csv('./output/profiles_by_age_%s.csv' % ages[i], index=None)
+    ages = range(20, 50)
+    # url_profile_by_ages = utils.time_measure(get_url_profile_by_ages, [ages])
+    # for i in range(len(ages)):
+    #     print 'Size df age %s: %s' % (ages[i], url_profile_by_ages[i].shape[0])
+    #     url_profile_by_ages[i].to_csv('./output/profiles_by_age_%s.csv' % ages[i], index=None)
+
+    aggregate_result(ages)
