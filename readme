@@ -2,7 +2,8 @@
 REQUIREMENT
 *****************************************
 - Have installed Google Chrome
-
+- Install senlenium. Instruction: http://selenium-python.readthedocs.io/installation.html#downloading-python-bindings-for-selenium
+- Install Chrome driver. Instruction: http://selenium-python.readthedocs.io/installation.html#drivers
 *****************************************
 HOW TO RUN
 *****************************************

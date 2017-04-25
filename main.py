@@ -16,7 +16,7 @@ from younet_rnd_infrastructure.tri.common import file_tool
 def get_url_profile_by_age(age, size=500):
     time.sleep(np.random.randint(0, 1500)/1000.0)
 
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
     driver.get("https://facebook.com/")
     email_input = driver.find_element_by_id("email")
     email_input.clear()
@@ -61,8 +61,8 @@ def get_url_profile_by_age(age, size=500):
         return pd.DataFrame()
 
 
-def get_url_profile_by_ages(ages):
-    url_profile_by_ages = utils.run_paralell(get_url_profile_by_age, ages, n_jobs=1)
+def get_url_profile_by_ages(ages, n_jobs=6):
+    url_profile_by_ages = utils.run_paralell(get_url_profile_by_age, ages, n_jobs=n_jobs)
     return url_profile_by_ages
 
 
@@ -88,7 +88,8 @@ def aggregate_result(ages):
 
 if __name__ == '__main__':
     ages = range(20, 50)
-    url_profile_by_ages = utils.time_measure(get_url_profile_by_ages, [ages])
+    # It will open 6 browser's window at the same time
+    url_profile_by_ages = utils.time_measure(get_url_profile_by_ages, [ages, 6])
     for i in range(len(ages)):
         print 'Size df age %s: %s' % (ages[i], url_profile_by_ages[i].shape[0])
         url_profile_by_ages[i].to_csv('./output/profiles_by_age_%s.csv' % ages[i], index=None)
