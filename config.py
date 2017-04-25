@@ -1,5 +1,5 @@
-__email = '56;<:7576:<'
-__password = 'kwnjsifsiqt{j<<=6=:'
+__email = ''
+__password = ''
 
 
 def get_email():
