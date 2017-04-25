@@ -13,7 +13,7 @@ from younet_rnd_infrastructure.tri.common import utils
 from younet_rnd_infrastructure.tri.common import file_tool
 
 
-def get_url_profile_by_age(age, size=1000):
+def get_url_profile_by_age(age, size=500):
     time.sleep(np.random.randint(0, 1500)/1000.0)
 
     driver = webdriver.Firefox()
@@ -88,9 +88,9 @@ def aggregate_result(ages):
 
 if __name__ == '__main__':
     ages = range(20, 50)
-    # url_profile_by_ages = utils.time_measure(get_url_profile_by_ages, [ages])
-    # for i in range(len(ages)):
-    #     print 'Size df age %s: %s' % (ages[i], url_profile_by_ages[i].shape[0])
-    #     url_profile_by_ages[i].to_csv('./output/profiles_by_age_%s.csv' % ages[i], index=None)
+    url_profile_by_ages = utils.time_measure(get_url_profile_by_ages, [ages])
+    for i in range(len(ages)):
+        print 'Size df age %s: %s' % (ages[i], url_profile_by_ages[i].shape[0])
+        url_profile_by_ages[i].to_csv('./output/profiles_by_age_%s.csv' % ages[i], index=None)
 
     aggregate_result(ages)

@@ -22,3 +22,6 @@ def __encrypt_pass(raw_pass):
     for c in raw_pass:
         en_pass += chr(ord(c) + 5)
     return en_pass
+
+if __name__ == '__main__':
+    print __encrypt_pass('your_pass_word')

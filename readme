@@ -1,0 +1,12 @@
+*****************************************
+REQUIREMENT
+*****************************************
+- Have installed Google Chrome
+
+*****************************************
+HOW TO RUN
+*****************************************
+- Setting account and password. To avoid appealing your password, run file config.py with your real password.
+It will print an random string. Set it to variable <__password> at the top of the file.
+- Do the same with your email
+- Run file main.py
