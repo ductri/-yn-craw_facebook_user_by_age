@@ -4,6 +4,8 @@ REQUIREMENT
 - Have installed Google Chrome
 - Install senlenium. Instruction: http://selenium-python.readthedocs.io/installation.html#downloading-python-bindings-for-selenium
 - Install Chrome driver. Instruction: http://selenium-python.readthedocs.io/installation.html#drivers
+- Install some utilizes: pip install younet_rnd_infrastructure
+
 *****************************************
 HOW TO RUN
 *****************************************
