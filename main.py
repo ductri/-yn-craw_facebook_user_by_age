@@ -10,7 +10,6 @@ import numpy as np
 
 import config
 from younet_rnd_infrastructure.tri.common import utils
-from younet_rnd_infrastructure.tri.common import file_tool
 
 
 def get_url_profile_by_age(age, size=500):
@@ -62,7 +61,7 @@ def get_url_profile_by_age(age, size=500):
 
 
 def get_url_profile_by_ages(ages, n_jobs=6):
-    url_profile_by_ages = utils.run_paralell(get_url_profile_by_age, ages, n_jobs=n_jobs)
+    url_profile_by_ages = utils.run_paralell_not_restrict(get_url_profile_by_age, ages, n_jobs=n_jobs)
     return url_profile_by_ages
 
 
